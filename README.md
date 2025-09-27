@@ -1,4 +1,4 @@
-My hw (I'll change README later)
-Email: k_tupikova00@mail.ru
-Telegram: @sugahu
+My small repository for study  
+Email: k_tupikova00@mail.ru  
+Telegram: @sugahu  
 Name: Tupikova Ekaterina Victorovna
