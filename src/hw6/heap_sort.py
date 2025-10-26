@@ -1,4 +1,4 @@
-def up_elem(arr, ind):
+def rise_elem(arr, ind):
     parent_ind = (ind - 1) // 2;
     while (ind > 0 and arr[ind] > arr[parent_ind]):
         arr[ind], arr[parent_ind] = arr[parent_ind], arr[ind]
@@ -6,7 +6,7 @@ def up_elem(arr, ind):
         parent_ind = (parent_ind - 1) // 2
 
 
-def down_elem(arr, ind, len_arr):
+def fall_elem(arr, len_arr, ind = 0):
     swap = 1
     l_child = ind * 2 + 1
     r_child = l_child + 1
@@ -27,8 +27,8 @@ def down_elem(arr, ind, len_arr):
 
 def heap_sort(arr):
     for i in range(1, len(arr)):
-        up_elem(arr, i)
+        rise_elem(arr, i)
 
     for i in range(len(arr) - 1, 0, -1):
         arr[0], arr[i] = arr[i], arr[0]
-        down_elem(arr, 0, i)
+        fall_elem(arr, i)
