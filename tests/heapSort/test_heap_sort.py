@@ -1,7 +1,7 @@
 import pytest
 from random import randint
-from src.hw6.heap_sort import heap_sort, bubble_sort
-
+from src.hw6.heap_sort import heap_sort
+from src.hw6.bubble_sort import bubble_sort
 
 def random_arr(lenght):
     arr = [0] * lenght
@@ -24,18 +24,19 @@ TEST_CASES_RANDOM_HARD = [random_arr(randint(1, 10**3)) for i in range(30)]
 
 
 class TestHeapSort:
-    @pytest.mark.parametrize("arr", TEST_CASES_RANDOM_SOFT)
-    def test_keep_lenght(arr):
-        return len(arr) == len(heap_sort(arr))
-
-
-    @pytest.mark.parametrize("arr,expected,tats_name", TEST_CASES)
-    def test_unit_heap_sort(arr, expected, test_name):
+    @pytest.mark.parametrize("arr,expected,test_name", TEST_CASES)
+    def test_unit_heap_sort(self, arr, expected, test_name):
         new_arr = arr[:]
         heap_sort(new_arr)
         assert new_arr == expected
 
+    @pytest.mark.parametrize("arr", TEST_CASES_RANDOM_SOFT)
+    def test_keep_lenght(self, arr):
+        new_arr = arr[:]
+        heap_sort(new_arr)
+        assert len(arr) == len(new_arr)
+
 
     @pytest.mark.parametrize("arr", TEST_CASES_RANDOM_HARD)
-    def test_heap_sort_random(arr):
+    def test_heap_sort_random(self, arr):
         assert heap_sort(arr) == bubble_sort(arr)

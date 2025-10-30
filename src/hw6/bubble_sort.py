@@ -3,6 +3,6 @@ def bubble_sort(args):
     while swap:
         swap = 0
         for i in range(1, len(args)):
-            if args[i - 1] > a[i]:
+            if args[i - 1] > args[i]:
                 args[i - 1], args[i] = args[i], args[i - 1]
                 swap = 1
