@@ -1,0 +1,9 @@
+name: Ruff
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: pip install ruff
+      - run: ruff check .
