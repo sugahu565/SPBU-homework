@@ -20,6 +20,8 @@ def curry(function, lenght_arg):
 
 
 def uncurry(function, lenght_arg):
+    if lenght_arr < 0:
+        raise Exception("invalid lenght of arguments")
     def need_function(*args):
         curr_arg = args[0]
         now_function = function
