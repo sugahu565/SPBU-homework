@@ -83,7 +83,7 @@ def encode_f(msg) -> str:
 
 def decode_f(msg) -> str:
     if len(msg) < 24:
-        raise BrokenFile("invalid file, table doesn't exist")
+        raise ValueError("invalid file, table doesn't exist")
     extra_symb = int(msg[:8], 2)
     used_symbols = int(msg[8:24], 2)
     # start new line of table

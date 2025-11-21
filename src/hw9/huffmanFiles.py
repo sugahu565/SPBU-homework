@@ -15,7 +15,7 @@ class HuffmanFile:
             return "txt"
         elif self.path.endswith("bin"):
             return "bin"
-        raise InvalidFormat("file isn't txt or bin")
+        raise ValueError("file isn't txt or bin")
 
     def __open_file(self):
         try:
@@ -23,14 +23,14 @@ class HuffmanFile:
                 self.file_opened = open(self.path, "a+", encoding="utf-8")
             else:
                 self.file_opened = open(self.path, "ab+")
-        except:
+        except Exception:
             print("error: unable to open file")
 
     def to_txt(self):
         if self.format == "txt":
             print("Already txt")
             return False
-        if self.file_opened == None:
+        if self.file_opened is None:
             print("file isn't open")
             return False
 
@@ -58,7 +58,7 @@ class HuffmanFile:
         if self.format == "bin":
             print("Already bin")
             return False
-        if self.file_opened == None:
+        if self.file_opened is None:
             print("file isn't open")
             return False
 
@@ -83,7 +83,7 @@ class HuffmanFile:
         """
         write to the end of the line
         """
-        if self.file_opened == None:
+        if self.file_opened is None:
             print("file isn't open")
             return False
         if self.format == "bin":
@@ -93,7 +93,7 @@ class HuffmanFile:
         return True
 
     def close(self):
-        if self.file_opened != None:
+        if self.file_opened is not None:
             self.file_opened.close()
             self.file_opened = None
             self.path = ""
