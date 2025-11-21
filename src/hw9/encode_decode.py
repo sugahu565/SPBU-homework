@@ -76,15 +76,18 @@ def encode_f(msg) -> str:
     table += f"{used_symbols:016b}"
     for symb, code in huffmanDict.items():
         table += f"{ord(symb):016b}{len(code):016b}{code}"
-    return table + encoded_msg
+    s = table + encoded_msg
+    extra_symb = (8 - len(s) % 8) % 8
+    return f"{extra_symb:08b}" + s
 
 
 def decode_f(msg) -> str:
-    if len(msg) < 16:
+    if len(msg) < 24:
         raise BrokenFile("invalid file, table doesn't exist")
-    used_symbols = int(msg[:16], 2)
+    extra_symb = int(msg[:8], 2)
+    used_symbols = int(msg[8:24], 2)
     #start new line of table
-    start = 16
+    start = 24
     huffmanDict = {}
     while used_symbols > 0:
         code_of_symb = msg[start:start+16]
@@ -97,4 +100,4 @@ def decode_f(msg) -> str:
         huffmanDict[symb] = huff_code
         start = start + len_huff_code
         used_symbols -= 1
-    return decode(msg[start:], huffmanDict)
+    return decode(msg[start:-extra_symb], huffmanDict)
