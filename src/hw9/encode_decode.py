@@ -7,18 +7,20 @@ def give_huffman_code(graph: dict, root: str, huffDict: dict, path: str):
         give_huffman_code(graph, child1, huffDict, path + "0")
         give_huffman_code(graph, child2, huffDict, path + "1")
     else:
-        huffDict[child1] = path + "0"
-        huffDict[child2] = path + "1"
+        huffDict[root] = path
 
 
-def encode_str(msg: str): -> tuple[str, dict[str, str]]
+def encode(msg: str) -> tuple[str, dict[str, str]]:
     entry_of_symb = {}
     for c in msg:
-        entry_of_symb[c] += 1
+        if c in entry_of_symb:
+            entry_of_symb[c] += 1
+        else:
+            entry_of_symb[c] = 1
 
     q = PriorityQueue()
     len_queue = 0
-    for symb, entry in entry_of_symb:
+    for symb, entry in entry_of_symb.items():
         q.put((entry, symb))
         len_queue += 1
 
@@ -32,7 +34,7 @@ def encode_str(msg: str): -> tuple[str, dict[str, str]]
         q.put((min_symb1[0] + min_symb2[0], s))
         len_queue -= 1
 
-    root = q.get()
+    root = q.get()[1]
     huffmanDict = {}
 
     if len(root) == 1:
@@ -44,3 +46,17 @@ def encode_str(msg: str): -> tuple[str, dict[str, str]]
     for c in msg:
         encoded_msg += huffmanDict[c]
     return (encoded_msg, huffmanDict)
+
+
+def decode(encoded: str, table: dict[str, str]) -> str:
+    reversed_table = {}
+    for key, value in table.items():
+        reversed_table[value] = key
+    msg = ""
+    symb = ""
+    for c in encoded:
+        symb += c
+        if symb in reversed_table:
+            msg += reversed_table[symb]
+            symb = ""
+    return msg
