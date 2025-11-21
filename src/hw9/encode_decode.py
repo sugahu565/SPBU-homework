@@ -1,0 +1,46 @@
+from queue import PriorityQueue
+
+
+def give_huffman_code(graph: dict, root: str, huffDict: dict, path: str):
+    if root in graph:
+        child1, child2 = graph[root]
+        give_huffman_code(graph, child1, huffDict, path + "0")
+        give_huffman_code(graph, child2, huffDict, path + "1")
+    else:
+        huffDict[child1] = path + "0"
+        huffDict[child2] = path + "1"
+
+
+def encode_str(msg: str): -> tuple[str, dict[str, str]]
+    entry_of_symb = {}
+    for c in msg:
+        entry_of_symb[c] += 1
+
+    q = PriorityQueue()
+    len_queue = 0
+    for symb, entry in entry_of_symb:
+        q.put((entry, symb))
+        len_queue += 1
+
+    graph = {}
+    # key = parent, value = (child1, child2)
+    while len_queue > 1:
+        min_symb1 = q.get()
+        min_symb2 = q.get()
+        s = min_symb1[1] + min_symb2[1]
+        graph[s] = (min_symb1[1], min_symb2[1])
+        q.put((min_symb1[0] + min_symb2[0], s))
+        len_queue -= 1
+
+    root = q.get()
+    huffmanDict = {}
+
+    if len(root) == 1:
+        huffmanDict[root] = "1"
+    else:
+        give_huffman_code(graph, root, huffmanDict, "")
+
+    encoded_msg = ""
+    for c in msg:
+        encoded_msg += huffmanDict[c]
+    return (encoded_msg, huffmanDict)
