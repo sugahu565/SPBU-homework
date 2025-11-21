@@ -60,3 +60,41 @@ def decode(encoded: str, table: dict[str, str]) -> str:
             msg += reversed_table[symb]
             symb = ""
     return msg
+
+
+def encode_f(msg) -> str:
+    '''
+    returns encoded message with table in it
+    struct of table:
+    1. number of characters used (16 bits)
+    2. UTF-8 character code (16 bits) + Huffman code symbol lenght (16 bits) + Huffman code of symbol
+    point 2 for each unique symbol
+    '''
+    encoded_msg, huffmanDict = encode(msg)
+    table = ""
+    used_symbols = len(huffmanDict)
+    table += f"{used_symbols:016b}"
+    for symb, code in huffmanDict.items():
+        table += f"{ord(symb):016b}{len(code):016b}{code}"
+    return table + encoded_msg
+
+
+def decode_f(msg) -> str:
+    if len(msg) < 16:
+        raise BrokenFile("invalid file, table doesn't exist")
+    used_symbols = int(msg[:16], 2)
+    #start new line of table
+    start = 16
+    huffmanDict = {}
+    while used_symbols > 0:
+        code_of_symb = msg[start:start+16]
+        symb = chr(int(code_of_symb, 2))
+        len_huff_code = int(msg[start+16:start+32], 2)
+        start += 32
+        huff_code = ""
+        for i in range(start, start + len_huff_code):
+            huff_code += msg[i]
+        huffmanDict[symb] = huff_code
+        start = start + len_huff_code
+        used_symbols -= 1
+    return decode(msg[start:], huffmanDict)
