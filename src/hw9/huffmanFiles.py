@@ -106,8 +106,3 @@ class HuffmanFile:
 
     def __del__(self):
         self.close()
-
-
-ff = HuffmanFile("test.txt")
-ff.to_bin()
-ff.to_txt()
