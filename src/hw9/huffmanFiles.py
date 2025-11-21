@@ -1,5 +1,6 @@
 import os
 from encode_decode import encode_f, decode_f
+from work_with_bytes import byte_to_bit, bit_to_byte
 
 class HuffmanFile:
     def __init__(self, path: str):
@@ -38,14 +39,16 @@ class HuffmanFile:
         #prepare for reading after writing
         self.file_opened.seek(0)
         #save text from bin file
-        bin_text = self.file_opened.read()
+        #self.file_opened.read() -> class <bytes>
+        #byte_to_bit(self.file_opened.read()) -> class <str>
+        bin_text = byte_to_bit(self.file_opened.read())
         old_path = self.path
         new_path = self.path[:-3] + "txt"
 
         self.close()
         os.remove(old_path)
 
-        with open(new_path, "w") as f:
+        with open(new_path, "w", encoding="utf-8") as f:
             f.write(decode_f(bin_text))
 
         self.path = new_path
@@ -63,6 +66,7 @@ class HuffmanFile:
             return False
 
         self.file_opened.seek(0)
+        #class utf_text is str
         utf_text = self.file_opened.read()
         old_path = self.path
         new_path = self.path[:-3] + "bin"
@@ -70,8 +74,8 @@ class HuffmanFile:
         self.close()
         os.remove(old_path)
 
-        with open(new_path, "w", encoding="utf-8") as f:
-            f.write(encode_f(utf_text))
+        with open(new_path, "wb") as f:
+            f.write(bit_to_byte((encode_f(utf_text))))
 
         self.path = new_path
         self.format = "bin"
@@ -102,3 +106,8 @@ class HuffmanFile:
 
     def __del__(self):
         self.close()
+
+
+ff = HuffmanFile("test.txt")
+ff.to_bin()
+ff.to_txt()
