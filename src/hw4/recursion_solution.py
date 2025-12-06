@@ -13,6 +13,7 @@ def queen(n, i = 0, ban_sum_diag = 0, ban_diff_diag = 0, ban_column = 0):
     '''
     k = 0
     for j in range(n):
+        # проверка на зянятость диагоналей, столбца
         if check_bit(i + j, ban_sum_diag) and check_bit(i - j + (n - 1), ban_diff_diag) and check_bit(j, ban_column):
             if i == n - 1:
                 k += 1

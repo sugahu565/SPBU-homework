@@ -2,8 +2,10 @@ from itertools import permutations
 
 
 def check_valid(p):
+    # проверка для каждой пары ферзей, не бьют ли они друг друга
     for i in range(len(p)):
         for j in range(i + 1, len(p)):
+            # проверка по диагоналям
             if i - j == p[i] - p[j] or i + p[i] == j + p[j]:
                 return 0
     return 1
