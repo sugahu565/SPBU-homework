@@ -15,7 +15,3 @@ def queen(n):
     for i in permutations(range(n)):
         answer += check_valid(i)
     return answer
-
-
-n = int(input())
-print(queen(n))

@@ -22,7 +22,3 @@ def queen(n, i = 0, ban_sum_diag = 0, ban_diff_diag = 0, ban_column = 0):
                 new_ban_column = ban_column | (1 << j)
                 k += queen(n, i + 1, new_ban_sum, new_ban_diff, new_ban_column)
     return k
-
-
-n = int(input())
-print(queen(n))
