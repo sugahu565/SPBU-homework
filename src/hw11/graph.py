@@ -6,7 +6,7 @@ class Graph:
         self.order = []
 
 
-    def get_dfs_order(self):
+    def get_dfs_order(self, vert):
         order_dfs = []
         visited = set()
 
@@ -18,10 +18,7 @@ class Graph:
                 if to not in visited:
                     dfs(to)
 
-
-        for x in self.edges:
-            dfs(x)
-
+        dfs(vert)
         return order_dfs
 
 
