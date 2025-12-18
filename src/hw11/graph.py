@@ -7,6 +7,11 @@ class Graph:
 
 
     def get_dfs_order(self, vert):
+
+        if vert not in self.edges:
+            print("no vertex")
+            return []
+
         order_dfs = []
         visited = set()
 
