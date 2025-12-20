@@ -34,7 +34,8 @@ class Graph:
 
 
     def __next__(self):
-        if self.ind < self.number_vertex:
+        stop = len(self.order)
+        if self.ind < stop:
             r = self.order[self.ind]
             self.ind += 1
             return r
