@@ -26,5 +26,5 @@ TEST_CASES = [
 @pytest.mark.parametrize("dct,expected,test_name", TEST_CASES)
 def test_dfs(dct, expected, test_name):
     test_graph = Graph(dct)
-    dfs_order = test_graph.get_dfs_order(1)
+    dfs_order = test_graph.dfs_order(1)
     assert dfs_order == expected
