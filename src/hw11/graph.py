@@ -6,8 +6,7 @@ class Graph:
         self.order = []
 
 
-    def get_dfs_order(self, vert):
-
+    def dfs_order(self, vert):
         if vert not in self.edges:
             print("no vertex")
             return []
@@ -27,13 +26,17 @@ class Graph:
         return order_dfs
 
 
-    def __iter__(self):
-        self.order = self.get_dfs_order()
+    def get_dfs_order(self, vert):
         self.ind = 0
+        self.order = self.dfs_order(vert)
+
+
+    def __iter__(self):
         return self
 
 
     def __next__(self):
+        # предварительно необходимо использовать get_dfs_order
         stop = len(self.order)
         if self.ind < stop:
             r = self.order[self.ind]
